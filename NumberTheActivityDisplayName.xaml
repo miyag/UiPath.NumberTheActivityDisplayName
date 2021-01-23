@@ -1,0 +1,423 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:st="clr-namespace:System.Text;assembly=mscorlib" xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_projectPath" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1065.33333333333,6784.66666666667</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="66">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>Newtonsoft.Json</x:String>
+      <x:String>System.Dynamic</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Collections.Specialized</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="56">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Process flow&#xA;- 1. Set target project&#xD;&#xA;- 2. Backup project folder&#xD;&#xA;- 3. Get projects xaml&#xD;&#xA;- 4. Edit xaml&#xD;&#xA;  - For Each - line&#xD;&#xA;    - For Each - xaml file path&#xD;&#xA;      - If - contains DisplayName ?&#xD;&#xA;        - Sequence - edit DisplayName&#xD;&#xA;- 5. Output result" DisplayName="Sequence - Main" sap:VirtualizedContainerService.HintSize="1075.33333333333,6620" sap2010:WorkflowViewState.IdRef="Sequence_6">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="backUpPath" />
+      <Variable x:TypeArguments="s:String[]" Name="aryXamlFile" />
+      <Variable x:TypeArguments="str:MatchCollection" Name="matches" />
+      <Variable x:TypeArguments="x:Int32" Name="idxLoop" />
+      <Variable x:TypeArguments="x:Int32" Name="idxDisplayName" />
+      <Variable x:TypeArguments="x:String" Name="displayNameOld" />
+      <Variable x:TypeArguments="x:String" Name="displayNameNew" />
+      <Variable x:TypeArguments="st:StringBuilder" Default="[new StringBuilder]" Name="stbLine" />
+      <Variable x:TypeArguments="st:StringBuilder" Default="[new StringBuilder]" Name="stbTag" />
+      <Variable x:TypeArguments="x:String" Name="projectName" />
+      <Variable x:TypeArguments="x:String" Name="htmlPath" />
+      <Variable x:TypeArguments="x:Boolean" Name="isXamlUpdate" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_displayName" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="SetSerialNoInProject" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence DisplayName="1. Set target project" sap:VirtualizedContainerService.HintSize="1033.33333333333,980" sap2010:WorkflowViewState.IdRef="Sequence_8">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[in_projectPath = &quot;&quot;]" DisplayName="If - is empty ? - project directory " sap:VirtualizedContainerService.HintSize="484,214" sap2010:WorkflowViewState.IdRef="If_5">
+        <If.Then>
+          <ui:SelectFolder sap2010:Annotation.AnnotationText="Select Target Project" DisplayName="Select Folder - project" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="SelectFolder_1" SelectedFolder="[in_projectPath]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:SelectFolder>
+        </If.Then>
+      </If>
+      <ui:LogMessage DisplayName="Log Message - project directory" sap:VirtualizedContainerService.HintSize="484,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;project directory : &quot; &amp; in_projectPath]" />
+      <If Condition="[Not(IO.Directory.Exists(in_projectPath))]" DisplayName="If - check project directory exists" sap:VirtualizedContainerService.HintSize="484,221.333333333333" sap2010:WorkflowViewState.IdRef="If_1">
+        <If.Then>
+          <Throw sap2010:Annotation.AnnotationText="New Exception(&quot;directory not found. &quot; &amp; projectPath)" DisplayName="Throw - project not found" Exception="[New Exception(&quot;directory not found. &quot; &amp; in_projectPath)]" sap:VirtualizedContainerService.HintSize="200,67.3333333333333" sap2010:WorkflowViewState.IdRef="Throw_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Throw>
+        </If.Then>
+      </If>
+      <If Condition="[Not(IO.File.Exists(IO.Path.Combine(in_projectPath, &quot;project.json&quot;)))]" DisplayName="If - check project json exists" sap:VirtualizedContainerService.HintSize="484,238" sap2010:WorkflowViewState.IdRef="If_10">
+        <If.Then>
+          <Throw sap2010:Annotation.AnnotationText="New Exception(&quot;file not found. &quot; &amp; IO.Path.Combine(projectPath, &quot;project.json&quot;))" DisplayName="Throw - project.json not found" Exception="[New Exception(&quot;file not found. &quot; &amp; IO.Path.Combine(in_projectPath, &quot;project.json&quot;))]" sap:VirtualizedContainerService.HintSize="200,84" sap2010:WorkflowViewState.IdRef="Throw_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Throw>
+        </If.Then>
+      </If>
+    </Sequence>
+    <Assign DisplayName="Assign - backup directory" sap:VirtualizedContainerService.HintSize="1033.33333333333,62" sap2010:WorkflowViewState.IdRef="Assign_37">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[backUpPath]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[IO.Path.Combine(IO.Path.GetDirectoryName(in_projectPath), IO.Path.GetFileName(in_projectPath) &amp; "_" &amp; Now.ToString("yyyyMMdd-HHmmss"))]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Sequence DisplayName="2. Backup project folder" sap:VirtualizedContainerService.HintSize="1033.33333333333,492.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_19">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign DisplayName="Assign - backup directory" sap:VirtualizedContainerService.HintSize="334,62" sap2010:WorkflowViewState.IdRef="Assign_22">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[backUpPath]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[IO.Path.Combine(IO.Path.GetDirectoryName(in_projectPath), IO.Path.GetFileName(in_projectPath) &amp; "_" &amp; Now.ToString("yyyyMMdd-HHmmss"))]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:LogMessage DisplayName="Log Message - backup directory" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_24" Level="Info" Message="[&quot;backup directory : &quot; &amp; backUpPath]" />
+      <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim isOverWrite As Boolean = True&#xA;Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(sourceDir, destinationDir, isOverWrite)" DisplayName="Invoke code - copy project directory" sap:VirtualizedContainerService.HintSize="334,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+        <ui:InvokeCode.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="sourceDir">[in_projectPath]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="destinationDir">[backUpPath]</InArgument>
+        </ui:InvokeCode.Arguments>
+      </ui:InvokeCode>
+    </Sequence>
+    <Sequence DisplayName="3. Get projects xaml" sap:VirtualizedContainerService.HintSize="1033.33333333333,288.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_9">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign DisplayName="Assign - get xaml file in project" sap:VirtualizedContainerService.HintSize="334,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+        <Assign.To>
+          <OutArgument x:TypeArguments="s:String[]">[aryXamlFile]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="s:String[]">[IO.Directory.GetFiles(in_projectPath, "*.xaml", IO.SearchOption.AllDirectories)]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:LogMessage DisplayName="Log Message - xaml file count" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;xaml file : &quot; &amp; aryXamlFile.Count]" />
+    </Sequence>
+    <Sequence DisplayName="4. Edit xaml" sap:VirtualizedContainerService.HintSize="1033.33333333333,2929.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_10">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:LogMessage DisplayName="Log Message - edit start" sap:VirtualizedContainerService.HintSize="991.333333333333,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;edit - start&quot;]" />
+      <ui:BuildDataTable DataTable="[dt_displayName]" DisplayName="Build Data Table - displayName" sap:VirtualizedContainerService.HintSize="991.333333333333,58.6666666666667" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;filePath&quot; msdata:Caption=&quot;&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;LineNo&quot; msdata:Caption=&quot;&quot; type=&quot;xs:int&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;DisplaynameOld&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;displayNameNew&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;isUpdateDisplayName&quot; msdata:Caption=&quot;&quot; type=&quot;xs:boolean&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+      <ui:ForEach x:TypeArguments="x:String" CurrentIndex="[idxDisplayName]" DisplayName="For Each - xaml file path" sap:VirtualizedContainerService.HintSize="991.333333333333,2469.33333333333" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[aryXamlFile]">
+        <ui:ForEach.Body>
+          <ActivityAction x:TypeArguments="x:String">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:String" Name="xpath" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Sequence - xaml file path" sap:VirtualizedContainerService.HintSize="954.666666666667,2330.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_4">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="s:String[]" Name="aryLine" />
+              </Sequence.Variables>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign DisplayName="Assign - count up index" sap:VirtualizedContainerService.HintSize="912.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_26">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[idxDisplayName]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[IF(SetSerialNoInProject, idxDisplayName, 0)]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Assign - isXamlUpdate initialize" sap:VirtualizedContainerService.HintSize="912.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_33">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Boolean">[isXamlUpdate]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Assign - convert file to line array" sap:VirtualizedContainerService.HintSize="912.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_23">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="s:String[]">[aryLine]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="s:String[]">[IO.File.ReadLines(xpath).ToArray]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <ui:ForEach x:TypeArguments="x:String" CurrentIndex="[idxLoop]" DisplayName="For Each - line" sap:VirtualizedContainerService.HintSize="912.666666666667,1501.33333333333" sap2010:WorkflowViewState.IdRef="ForEach`1_9" Values="[aryLine]">
+                <ui:ForEach.Body>
+                  <ActivityAction x:TypeArguments="x:String">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="x:String" Name="line" />
+                    </ActivityAction.Argument>
+                    <Sequence DisplayName="Sequence - line" sap:VirtualizedContainerService.HintSize="876,1362.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign DisplayName="Assign - extract DisplayName" sap:VirtualizedContainerService.HintSize="834,62" sap2010:WorkflowViewState.IdRef="Assign_24">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="str:MatchCollection">[matches]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="str:MatchCollection">[RegEx.Matches(line, " DisplayName=""([^""]*)""")]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <If Condition="[matches.Count &gt; 0]" DisplayName="If - contains DisplayName ?" sap:VirtualizedContainerService.HintSize="834,1066.66666666667" sap2010:WorkflowViewState.IdRef="If_11">
+                        <If.Then>
+                          <Sequence DisplayName="Sequence - edit DisplayName" sap:VirtualizedContainerService.HintSize="526,912.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Assign DisplayName="Assign - index count up" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_25">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Int32">[idxDisplayName]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Int32">[idxDisplayName + 1]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign DisplayName="Assign - current name" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_27">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[displayNameOld]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">[matches(0).Groups(1).Value]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign DisplayName="Assign - new name" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_28">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[displayNameNew]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">[String.Format("[{0}] {1}", idxDisplayName, RegEx.Replace(displayNameOld, "^\[[0-9]{1,4}\]\s*", ""))]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign DisplayName="Assign - edit line" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_29">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[line]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">[line.Replace("DisplayName=""" &amp; displayNameOld &amp; "", "DisplayName=""" &amp; displayNameNew &amp; "")]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[displayNameOld &lt;&gt; displayNameNew]" DisplayName="If - check changes" sap:VirtualizedContainerService.HintSize="484,216" sap2010:WorkflowViewState.IdRef="If_12">
+                              <If.Then>
+                                <Assign DisplayName="Assign - isXamlUpdate true" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_34">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Boolean">[isXamlUpdate]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                            </If>
+                            <ui:LogMessage DisplayName="Log Message - DisplayName" sap:VirtualizedContainerService.HintSize="484,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_25" Level="Info" Message="[String.Format(&quot;{0} - {1} -&gt; {2}&quot;, xpath, displayNameOld, displayNameNew)]" />
+                            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[New Object(){xpath, idxLoop + 1, displayNameOld, displayNameNew, Not(displayNameOld = displayNameNew)}]" DataTable="[dt_displayName]" DisplayName="Add Data Row - displayName" sap:VirtualizedContainerService.HintSize="484,22" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                          </Sequence>
+                        </If.Then>
+                        <If.Else>
+                          <Assign DisplayName="Assign - not edit line" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_30">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[line]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[line]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                        </If.Else>
+                      </If>
+                      <Assign DisplayName="Assign - set line" sap:VirtualizedContainerService.HintSize="834,62" sap2010:WorkflowViewState.IdRef="Assign_31">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="st:StringBuilder">[stbLine]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="st:StringBuilder">[stbLine.AppendLine(line)]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </Sequence>
+                  </ActivityAction>
+                </ui:ForEach.Body>
+              </ui:ForEach>
+              <If Condition="[isXamlUpdate]" DisplayName="If - isXamlUpdate ?" sap:VirtualizedContainerService.HintSize="912.666666666667,289.333333333333" sap2010:WorkflowViewState.IdRef="If_13">
+                <If.Then>
+                  <ui:WriteTextFile DisplayName="Write Text File - update xaml file" Encoding="UTF-8" FileName="[xpath]" sap:VirtualizedContainerService.HintSize="334,135.333333333333" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[stbLine.ToString]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:WriteTextFile>
+                </If.Then>
+              </If>
+              <Assign DisplayName="Assign clear line" sap:VirtualizedContainerService.HintSize="912.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_32">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="st:StringBuilder">[stbLine]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="st:StringBuilder">[stbLine.Clear]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </Sequence>
+          </ActivityAction>
+        </ui:ForEach.Body>
+      </ui:ForEach>
+      <ui:LogMessage DisplayName="Log Message - edit end" sap:VirtualizedContainerService.HintSize="991.333333333333,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_28" Level="Info" Message="[&quot;edit - end&quot;]" />
+    </Sequence>
+    <Sequence DisplayName="5. Output result" sap:VirtualizedContainerService.HintSize="1033.33333333333,1396.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_12">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign DisplayName="Assign - projectName" sap:VirtualizedContainerService.HintSize="376,62" sap2010:WorkflowViewState.IdRef="Assign_35">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[projectName]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[IO.Path.GetFileName(in_projectPath)]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign DisplayName="Assign - htmlPath" sap:VirtualizedContainerService.HintSize="376,62" sap2010:WorkflowViewState.IdRef="Assign_36">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[htmlPath]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[projectName &amp; ".html"]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:LogMessage DisplayName="Log Message - xaml update file count" sap:VirtualizedContainerService.HintSize="376,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_27" Level="Info" Message="[&quot;update xaml file :&quot; &amp; dt_displayName.DefaultView.ToTable(True, &quot;FilePath&quot;, &quot;IsUpdateDisplayName&quot;).AsEnumerable.Count(Function(r) Cbool(r.Item(&quot;IsUpdateDisplayName&quot;)))]" />
+      <ui:LogMessage DisplayName="Log Message - displayname update count" sap:VirtualizedContainerService.HintSize="376,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_29" Level="Info" Message="[&quot;updates DisplayName :&quot; &amp; dt_displayName.AsEnumerable.Count(Function(r) Cbool(r.Item(&quot;IsUpdateDisplayName&quot;)))]" />
+      <Sequence DisplayName="Sequence - output datatable to html" sap:VirtualizedContainerService.HintSize="376,831.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <ui:InvokeCode ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Do not use activities because it is too slow" Code="stb.AppendLine(&quot;&lt;style type=&quot;&quot;text/css&quot;&quot;&gt;&quot;)&#xA;stb.AppendLine(&quot;table.dtable, table.dtable th, table.dtable td{border-collapse:collapse; border:1px solid #ccc; line-height:1.5; font-size:15px;}&quot;)&#xA;stb.AppendLine(&quot;table.dtable th {padding:5px; font-weight:normal; background:#3f3f3f; color:#fff; position:-webkit-sticky; position:sticky; top:0; z-index:1;}&quot;)&#xA;stb.AppendLine(&quot;table.dtable td {padding:5px;}&quot;)&#xA;stb.AppendLine(&quot;table.dtable tr:nth-child(2n+1) {background:#f5f5f5;}&quot;)&#xA;stb.AppendLine(&quot;table.dtable tr:hover {background-color:#ffc;}&quot;)&#xA;stb.AppendLine(&quot;&lt;/style&gt;&quot;)" DisplayName="Invoke Code - set css" sap:VirtualizedContainerService.HintSize="334,194.666666666667" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
+          <ui:InvokeCode.Arguments>
+            <InArgument x:TypeArguments="sd:DataTable" x:Key="dt">[dt_displayName]</InArgument>
+            <InOutArgument x:TypeArguments="st:StringBuilder" x:Key="stb">[stbTag]</InOutArgument>
+          </ui:InvokeCode.Arguments>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:InvokeCode>
+        <ui:InvokeCode ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Do not use activities because it is too slow" Code="stb.AppendLine(&quot;&lt;table class='dtable'&gt;&quot;)&#xA;stb.Append(&quot;&lt;tr&gt;&quot;)&#xA;For Each c As DataColumn In dt.Columns&#xA;  stb.Append(&quot;&lt;th&gt;&quot; &amp; c.ColumnName() + &quot;&lt;/th&gt;&quot;)&#xA;Next&#xA;stb.AppendLine(&quot;&lt;/tr&gt;&quot;)&#xA;Dim col, val As String&#xA;For Each r As DataRow In dt.Rows&#xA;&#x9;stb.Append(&quot;&lt;tr&gt;&quot;)&#xA;&#x9;For Each c As DataColumn In dt.Columns&#xA;&#x9;&#x9;col = c.ColumnName&#xA;&#x9;&#x9;val = r.Item(col).ToString&#xA;&#x9;&#x9;If col = &quot;UserIcon&quot; Then&#xA;&#x9;&#x9;&#x9;stb.Append(String.Format(&quot;&lt;td class='{0}'&gt;&lt;img src='{1}'&gt;&lt;/td&gt;&quot;,  col, val))&#xA;&#x9;&#x9;ElseIf col = &quot;TweetUrl&quot; Then&#xA;&#x9;&#x9;&#x9;stb.Append(String.Format(&quot;&lt;td class='{0}'&gt;&lt;a href='{1}' target='_blank'&gt;url&lt;/a&gt;&lt;/td&gt;&quot;,  col, val))&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;Else&#xA;&#x9;&#x9;&#x9;stb.Append(String.Format(&quot;&lt;td class='{0}'&gt;{1}&lt;/td&gt;&quot;,  col, val))&#xA;&#x9;&#x9;End If&#xA;&#x9;Next&#xA;&#x9;stb.AppendLine(&quot;&lt;/tr&gt;&quot;)&#xA;Next&#xA;stb.AppendLine(&quot;&lt;/table&gt;&quot;)" DisplayName="Invoke Code - set table tag" sap:VirtualizedContainerService.HintSize="334,194.666666666667" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+          <ui:InvokeCode.Arguments>
+            <InArgument x:TypeArguments="sd:DataTable" x:Key="dt">[dt_displayName]</InArgument>
+            <InOutArgument x:TypeArguments="st:StringBuilder" x:Key="stb">[stbTag]</InOutArgument>
+          </ui:InvokeCode.Arguments>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:InvokeCode>
+        <ui:WriteTextFile DisplayName="WriteTextFile - create html" FileName="[htmlPath]" sap:VirtualizedContainerService.HintSize="334,135.333333333333" sap2010:WorkflowViewState.IdRef="WriteTextFile_2" Text="[String.Format(&quot;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;&quot;UTF-8&quot;&quot;&gt;&lt;title&gt;{0}&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h2&gt;project: {0}&lt;/h2&gt;{1}&lt;h5&gt;{2}&lt;/h5&gt;&lt;/body&gt;&lt;/html&gt;&quot;,&#xA; projectName, stbTag.ToString, now.ToString(&quot;yyyy/MM/dd HH:mm:ss&quot;))]" />
+        <ui:LogMessage DisplayName="Log Message - html path" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_30" Level="Info" Message="[&quot;output result to html : &quot; &amp; IO.Path.GetFullPath(htmlPath)]" />
+      </Sequence>
+    </Sequence>
+  </Sequence>
+</Activity>
